@@ -22,7 +22,7 @@ class drupalConnector {
 	}
 
 	// TODO: ombouwen naar async met promise:
-	https://www.tomas-dvorak.cz/posts/nodejs-request-without-dependencies/
+	// https://www.tomas-dvorak.cz/posts/nodejs-request-without-dependencies/
 
 }
 
