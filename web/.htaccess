@@ -42,4 +42,4 @@ AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml text/x-js t
 RewriteEngine on 
 RewriteCond %{REQUEST_URI} !^/(index.html)?$ 
 RewriteCond %{REQUEST_URI} !.(gif|jpeg|png|css|js)$ 
-RewriteRule .* / [L,R=302]
+RewriteRule .* / [L,NC]
