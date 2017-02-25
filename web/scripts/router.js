@@ -83,6 +83,8 @@ class nanoRouter {
   		console.log(route.route);
 	}
 
+	// @TODO doesn't work on back-button yet.
+
 }
 
 var router = new nanoRouter();
