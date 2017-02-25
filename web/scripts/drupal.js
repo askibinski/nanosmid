@@ -2,7 +2,7 @@
 "use strict";
 
 /**
- * ES6 Class.
+ * DrupalConnector (ES6) Class.
  */
 class drupalConnector {
 
@@ -14,7 +14,6 @@ class drupalConnector {
 	  this.node = this.get('https://service.nanosmid.nl/node/' + nid + '?_format=api_json');
 	}
 
-	// https://jakearchibald.com/2015/thats-so-fetch
 	get(url) {
 		fetch(url)
 		.then(this.status)
@@ -37,7 +36,7 @@ class drupalConnector {
 	}
 
 	showNid(data) {
-		console.log('Connected to Drupal!');
+		//console.log('Connected to Drupal!');
 		var h1 = document.createElement("h1")
 		var title = document.createTextNode(data.attributes.title);
 		var body = document.createTextNode(data.attributes.body.value);
@@ -49,5 +48,5 @@ class drupalConnector {
 
 }
 
-var api = new drupalConnector();
+var drupal = new drupalConnector();
 

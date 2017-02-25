@@ -2,7 +2,7 @@
 "use strict";
 
 /**
- * ES6 Class.
+ * NanoRouter (ES6) dlass.
  */
 class nanoRouter {
 
@@ -29,29 +29,39 @@ class nanoRouter {
 
 		this.scan();
 
-		this.checkCurrent();
+		this.loadCurrent();
+		
+		// Adding popstate event listener to handle browser back button  
+    	window.addEventListener("popstate", (e) => this.loadCurrent());
 
 	}
 
-	checkCurrent() {
+	loadCurrent() {
+		let route = this.check(location.pathname);
+		if (route !== false) {
+			this.navigate(route);
+		}
+	}
+
+	check(path) {
+		var path = this.clearSlashes(path);
 		var routes = this.getRoutes();
-		for (let route of routes) {
-			if (route.route == this.clearSlashes(location.pathname)) {
-				//console.log(`match: ${route}`);
-				this.navigate(route);
+		for (var i = 0; i < routes.length; i++) {
+			if (routes[i].route == path) {
+				return routes[i];
 			}
 		}
+		return false
 	}
 
 	// Scanning the document for all links which should be internal routes.
 	scan() {
 		let links = document.querySelectorAll('[data-nanorouter]');
-		for (let link of links) {
-		  //console.log(value.getAttribute('href'));
-		  let path = this.clearSlashes(link.getAttribute('href'));
-		  let nid = link.getAttribute('data-nanorouter');
+		for (var i = 0; i < links.length; i++) {
+		  let path = this.clearSlashes(links[i].getAttribute('href'));
+		  let nid = links[i].getAttribute('data-nanorouter');
 		  this.add(path, nid);
-		  link.addEventListener('click', (e) => this.click(e, path));
+		  links[i].addEventListener('click', (e) => this.click(e, path));
 		}
 	}
 
@@ -61,29 +71,22 @@ class nanoRouter {
 
 	// Event handler for clicking a (scanned) link.
 	click(e, path) {
-		var routes = this.getRoutes();
-		for (let route of routes) {
-			if (route.route == path) {
-				//console.log(`match: ${route}`);
-				this.navigate(route);
-				e.preventDefault();
-			}
+		var route = this.check(path);
+		if (route !== false) {
+			this.navigate(route);
+			history.pushState(null, null, this.root + route.route);
+			e.preventDefault();	
 		}
 	}
 
 	navigate(route) {
 		if (route.nid) {
-			console.log(`this is a nid: ${route.nid}`);
-			api.getNid(route.nid);
+			drupal.getNid(route.nid);
 		} else {
 			console.log('I do not recognize this route');
 			// @TODO We only support nids for now.
 		}
-		history.pushState(null, null, this.root + route.route);
-  		console.log(route.route);
 	}
-
-	// @TODO doesn't work on back-button yet.
 
 }
 

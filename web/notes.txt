@@ -1,12 +1,13 @@
-https://nanosmid.nl/playground/dustbot/
-
-Inspiration: 
+router inspiration: 
 http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url
 https://github.com/krasimir/navigo
 
-// Javascript design patterns:
-// https://addyosmani.com/resources/essentialjsdesignpatterns/book
+Javascript design patterns:
+https://addyosmani.com/resources/essentialjsdesignpatterns/book
 
-// factories vs constructor functions vs classes
+fetch:
+https://jakearchibald.com/2015/thats-so-fetch
+
+factories vs constructor functions vs classes:
 https://medium.com/javascript-scene/javascript-factory-functions-vs-constructor-functions-vs-classes-2f22ceddf33e
 

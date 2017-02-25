@@ -2,7 +2,7 @@
 "use strict";
 
 /**
- * ES6 Class.
+ * DrupalConnector (ES6) Class.
  */
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -19,9 +19,6 @@ var drupalConnector = function () {
 		value: function getNid(nid) {
 			this.node = this.get('https://service.nanosmid.nl/node/' + nid + '?_format=api_json');
 		}
-
-		// https://jakearchibald.com/2015/thats-so-fetch
-
 	}, {
 		key: 'get',
 		value: function get(url) {
@@ -50,7 +47,7 @@ var drupalConnector = function () {
 	}, {
 		key: 'showNid',
 		value: function showNid(data) {
-			console.log('Connected to Drupal!');
+			//console.log('Connected to Drupal!');
 			var h1 = document.createElement("h1");
 			var title = document.createTextNode(data.attributes.title);
 			var body = document.createTextNode(data.attributes.body.value);
@@ -64,12 +61,12 @@ var drupalConnector = function () {
 	return drupalConnector;
 }();
 
-var api = new drupalConnector();
+var drupal = new drupalConnector();
 
 "use strict";
 
 /**
- * ES6 Class.
+ * NanoRouter (ES6) dlass.
  */
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -78,6 +75,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var nanoRouter = function () {
 	function nanoRouter() {
+		var _this = this;
+
 		_classCallCheck(this, nanoRouter);
 
 		// We are using closures here to store "private" data.
@@ -101,87 +100,59 @@ var nanoRouter = function () {
 
 		this.scan();
 
-		this.checkCurrent();
+		this.loadCurrent();
+
+		// Adding popstate event listener to handle browser back button  
+		window.addEventListener("popstate", function (e) {
+			return _this.loadCurrent();
+		});
 	}
 
 	_createClass(nanoRouter, [{
-		key: 'checkCurrent',
-		value: function checkCurrent() {
+		key: "loadCurrent",
+		value: function loadCurrent() {
+			var route = this.check(location.pathname);
+			if (route !== false) {
+				this.navigate(route);
+			}
+		}
+	}, {
+		key: "check",
+		value: function check(path) {
+			var path = this.clearSlashes(path);
 			var routes = this.getRoutes();
-			var _iteratorNormalCompletion = true;
-			var _didIteratorError = false;
-			var _iteratorError = undefined;
-
-			try {
-				for (var _iterator = routes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-					var route = _step.value;
-
-					if (route.route == this.clearSlashes(location.pathname)) {
-						//console.log(`match: ${route}`);
-						this.navigate(route);
-					}
-				}
-			} catch (err) {
-				_didIteratorError = true;
-				_iteratorError = err;
-			} finally {
-				try {
-					if (!_iteratorNormalCompletion && _iterator.return) {
-						_iterator.return();
-					}
-				} finally {
-					if (_didIteratorError) {
-						throw _iteratorError;
-					}
+			for (var i = 0; i < routes.length; i++) {
+				if (routes[i].route == path) {
+					return routes[i];
 				}
 			}
+			return false;
 		}
 
 		// Scanning the document for all links which should be internal routes.
 
 	}, {
-		key: 'scan',
+		key: "scan",
 		value: function scan() {
-			var _this = this;
+			var _this2 = this;
 
 			var links = document.querySelectorAll('[data-nanorouter]');
-			var _iteratorNormalCompletion2 = true;
-			var _didIteratorError2 = false;
-			var _iteratorError2 = undefined;
 
-			try {
-				var _loop = function _loop() {
-					var link = _step2.value;
+			var _loop = function _loop() {
+				var path = _this2.clearSlashes(links[i].getAttribute('href'));
+				var nid = links[i].getAttribute('data-nanorouter');
+				_this2.add(path, nid);
+				links[i].addEventListener('click', function (e) {
+					return _this2.click(e, path);
+				});
+			};
 
-					//console.log(value.getAttribute('href'));
-					var path = _this.clearSlashes(link.getAttribute('href'));
-					var nid = link.getAttribute('data-nanorouter');
-					_this.add(path, nid);
-					link.addEventListener('click', function (e) {
-						return _this.click(e, path);
-					});
-				};
-
-				for (var _iterator2 = links[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-					_loop();
-				}
-			} catch (err) {
-				_didIteratorError2 = true;
-				_iteratorError2 = err;
-			} finally {
-				try {
-					if (!_iteratorNormalCompletion2 && _iterator2.return) {
-						_iterator2.return();
-					}
-				} finally {
-					if (_didIteratorError2) {
-						throw _iteratorError2;
-					}
-				}
+			for (var i = 0; i < links.length; i++) {
+				_loop();
 			}
 		}
 	}, {
-		key: 'clearSlashes',
+		key: "clearSlashes",
 		value: function clearSlashes(path) {
 			return path.toString().replace(/\/$/, '').replace(/^\//, '');
 		}
@@ -189,54 +160,25 @@ var nanoRouter = function () {
 		// Event handler for clicking a (scanned) link.
 
 	}, {
-		key: 'click',
+		key: "click",
 		value: function click(e, path) {
-			var routes = this.getRoutes();
-			var _iteratorNormalCompletion3 = true;
-			var _didIteratorError3 = false;
-			var _iteratorError3 = undefined;
-
-			try {
-				for (var _iterator3 = routes[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-					var route = _step3.value;
-
-					if (route.route == path) {
-						//console.log(`match: ${route}`);
-						this.navigate(route);
-						e.preventDefault();
-					}
-				}
-			} catch (err) {
-				_didIteratorError3 = true;
-				_iteratorError3 = err;
-			} finally {
-				try {
-					if (!_iteratorNormalCompletion3 && _iterator3.return) {
-						_iterator3.return();
-					}
-				} finally {
-					if (_didIteratorError3) {
-						throw _iteratorError3;
-					}
-				}
+			var route = this.check(path);
+			if (route !== false) {
+				this.navigate(route);
+				history.pushState(null, null, this.root + route.route);
+				e.preventDefault();
 			}
 		}
 	}, {
-		key: 'navigate',
+		key: "navigate",
 		value: function navigate(route) {
 			if (route.nid) {
-				console.log('this is a nid: ' + route.nid);
-				api.getNid(route.nid);
+				drupal.getNid(route.nid);
 			} else {
 				console.log('I do not recognize this route');
 				// @TODO We only support nids for now.
 			}
-			history.pushState(null, null, this.root + route.route);
-			console.log(route.route);
 		}
-
-		// @TODO doesn't work on back-button yet.
-
 	}]);
 
 	return nanoRouter;
