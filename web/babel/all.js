@@ -145,26 +145,25 @@ var nanoRouter = function () {
 			var _this = this;
 
 			var links = document.querySelectorAll('[data-nanorouter]');
-
-			var _loop = function _loop(link) {
-				//console.log(value.getAttribute('href'));
-				var path = _this.clearSlashes(link.getAttribute('href'));
-				var nid = link.getAttribute('data-nanorouter');
-				_this.add(path, nid);
-				link.addEventListener('click', function (e) {
-					return _this.click(e, path);
-				});
-			};
-
 			var _iteratorNormalCompletion2 = true;
 			var _didIteratorError2 = false;
 			var _iteratorError2 = undefined;
 
 			try {
-				for (var _iterator2 = links[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+				var _loop = function _loop() {
 					var link = _step2.value;
 
-					_loop(link);
+					//console.log(value.getAttribute('href'));
+					var path = _this.clearSlashes(link.getAttribute('href'));
+					var nid = link.getAttribute('data-nanorouter');
+					_this.add(path, nid);
+					link.addEventListener('click', function (e) {
+						return _this.click(e, path);
+					});
+				};
+
+				for (var _iterator2 = links[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+					_loop();
 				}
 			} catch (err) {
 				_didIteratorError2 = true;
