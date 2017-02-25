@@ -6,38 +6,98 @@
  */
 class nanoRouter {
 
-	// Inspiration: http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url
+	// Inspiration: 
+	// http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url
+	// https://github.com/krasimir/navigo
+
+	// Javascript design patterns:
+	// https://addyosmani.com/resources/essentialjsdesignpatterns/book
+
+	// factories vs constructor functions vs classes
+	// https://medium.com/javascript-scene/javascript-factory-functions-vs-constructor-functions-vs-classes-2f22ceddf33e
+
+
 
 	constructor() {
-		console.log(location.pathname);
+		// We are using closures here to store "private" data.
+		// If we would be using "this.routes" then routes could be added through
+		// router.routes.push('bla'); 
+		// Now we force the use of the API method "add".
+
+		let routes = [];
+
+		this.root = '/';
+		
+		// We are assuming here all links are to other Drupal nodes
+		// and we store the nids in our routes array.
+		this.add = function(route, nid) {
+			let routeObj = {nid: nid, route: route}
+			routes.push(routeObj);
+		}
+		this.getRoutes = function() {
+			return routes;
+		}
+
+		this.scan();
+
+		this.checkCurrent();
+
 	}
 
-	// This is the old method using an old fashioned xmlhttprequest.
-	oldGet(url) {
-    	var Httpreq = new XMLHttpRequest(); 
-    	Httpreq.open("GET",url,false);
-    	Httpreq.send(null);
-    	return Httpreq.responseText;          
+	checkCurrent() {
+		var routes = this.getRoutes();
+		for (let route of routes) {
+			if (route.route == this.clearSlashes(location.pathname)) {
+				//console.log(`match: ${route}`);
+				this.navigate(route);
+			}
+		}
 	}
 
-	// https://jakearchibald.com/2015/thats-so-fetch
-	get(url) {
-		// This could be further enhanced using ES7 await.
-		fetch(url).then(function(response) {
-		  return response.json();
-		}).then(function(data) {
-			console.log('Connected to Drupal!');
-			var h1 = document.createElement("h1")
-			var title = document.createTextNode(data.attributes.title);
-			var body = document.createTextNode(data.attributes.body.value);
-			h1.appendChild(title);
-			document.getElementById('content').appendChild(h1);
-			document.getElementById('content').appendChild(body);
-		}).catch(function() {
-		  console.log("Booo");
-		});
+	// Scanning the document for all links which should be internal routes.
+	scan() {
+		let links = document.querySelectorAll('[data-nanorouter]');
+		for (let link of links) {
+		  //console.log(value.getAttribute('href'));
+		  let path = this.clearSlashes(link.getAttribute('href'));
+		  let nid = link.getAttribute('data-nanorouter');
+		  this.add(path, nid);
+		  link.addEventListener('click', (e) => this.click(e, path));
+		}
+	}
+
+	clearSlashes(path) {
+        return path.toString().replace(/\/$/, '').replace(/^\//, '');
+    }
+
+	// Event handler for clicking a (scanned) link.
+	click(e, path) {
+		var routes = this.getRoutes();
+		for (let route of routes) {
+			if (route.route == path) {
+				//console.log(`match: ${route}`);
+				this.navigate(route);
+				e.preventDefault();
+			}
+		}
+	}
+
+	navigate(route) {
+		if (route.nid) {
+			console.log(`this is a nid: ${route.nid}`);
+			api.getNid(route.nid);
+		} else {
+			console.log('I do not recognize this route');
+			// @TODO We only support nids for now.
+		}
+		history.pushState(null, null, this.root + route.route);
+  		console.log(route.route);
 	}
 
 }
 
 var router = new nanoRouter();
+
+//router.add('test');
+
+console.log(router.getRoutes());
