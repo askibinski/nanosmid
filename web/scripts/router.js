@@ -6,17 +6,6 @@
  */
 class nanoRouter {
 
-	// Inspiration: 
-	// http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url
-	// https://github.com/krasimir/navigo
-
-	// Javascript design patterns:
-	// https://addyosmani.com/resources/essentialjsdesignpatterns/book
-
-	// factories vs constructor functions vs classes
-	// https://medium.com/javascript-scene/javascript-factory-functions-vs-constructor-functions-vs-classes-2f22ceddf33e
-
-
 
 	constructor() {
 		// We are using closures here to store "private" data.
@@ -97,7 +86,3 @@ class nanoRouter {
 }
 
 var router = new nanoRouter();
-
-//router.add('test');
-
-console.log(router.getRoutes());
