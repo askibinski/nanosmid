@@ -2,6 +2,9 @@
 "use strict";
 
 var drupal = require('./drupal');
+
+
+// fetch() polyfill used by Babel.
 require('whatwg-fetch');
 
 /**
