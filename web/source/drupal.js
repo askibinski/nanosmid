@@ -4,10 +4,10 @@
 /**
  * DrupalConnector (ES6) Class.
  */
-class drupalConnector {
+class Drupal {
 
 	constructor() {
-
+		//console.log('start drupal');
 	}
 
 	getNid(nid) {
@@ -48,5 +48,4 @@ class drupalConnector {
 
 }
 
-var drupal = new drupalConnector();
-
+export let drupal = new Drupal();

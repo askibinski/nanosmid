@@ -1,13 +1,15 @@
 
 "use strict";
 
-/**
- * NanoRouter (ES6) dlass.
- */
-class nanoRouter {
+var drupal = require('./drupal');
 
+/**
+ * NanoRouter (ES6) class.
+ */
+class Router {
 
 	constructor() {
+
 		// We are using closures here to store "private" data.
 		// If we would be using "this.routes" then routes could be added through
 		// router.routes.push('bla'); 
@@ -16,7 +18,7 @@ class nanoRouter {
 		let routes = [];
 
 		this.root = '/';
-		
+	
 		// We are assuming here all links are to other Drupal nodes
 		// and we store the nids in our routes array.
 		this.add = function(route, nid) {
@@ -81,7 +83,7 @@ class nanoRouter {
 
 	navigate(route) {
 		if (route.nid) {
-			drupal.getNid(route.nid);
+			drupal.drupal.getNid(route.nid);
 		} else {
 			console.log('I do not recognize this route');
 			// @TODO We only support nids for now.
@@ -90,4 +92,4 @@ class nanoRouter {
 
 }
 
-var router = new nanoRouter();
+export let router = new Router();

@@ -11,3 +11,8 @@ https://jakearchibald.com/2015/thats-so-fetch
 factories vs constructor functions vs classes:
 https://medium.com/javascript-scene/javascript-factory-functions-vs-constructor-functions-vs-classes-2f22ceddf33e
 
+goede uitleg browserify:
+https://scotch.io/tutorials/getting-started-with-browserify
+https://www.viget.com/articles/gulp-browserify-starter-faq
+verschillende plugins gulp:
+https://wehavefaces.net/gulp-browserify-the-gulp-y-way-bb359b3f9623

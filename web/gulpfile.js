@@ -1,13 +1,24 @@
 var gulp = require("gulp");
-var sourcemaps = require("gulp-sourcemaps");
-var babel = require("gulp-babel");
-var concat = require("gulp-concat");
 
-gulp.task("default", function () {
-  return gulp.src("scripts/**/*.js")
-    .pipe(sourcemaps.init())
-    .pipe(babel())
-    .pipe(concat("all.js"))
-    .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest("babel"));
+var concat = require("gulp-concat");
+var uglify = require('gulp-uglify');
+var browserify = require("browserify");
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+
+
+var babelify = require('babelify');
+
+gulp.task('default', function () {
+  browserify({
+    entries: './source/app.js',
+    debug: true,
+    transform: ['babelify']
+  })
+  .bundle()
+  .pipe(source('./app.js'))
+  .pipe(buffer())
+  .pipe(uglify())
+  .pipe(gulp.dest("scripts"));
 });
+
