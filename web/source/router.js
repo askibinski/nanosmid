@@ -2,6 +2,7 @@
 "use strict";
 
 var drupal = require('./drupal');
+require('whatwg-fetch');
 
 /**
  * NanoRouter (ES6) class.

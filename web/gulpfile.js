@@ -5,8 +5,6 @@ var uglify = require('gulp-uglify');
 var browserify = require("browserify");
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
-
-
 var babelify = require('babelify');
 
 gulp.task('default', function () {
