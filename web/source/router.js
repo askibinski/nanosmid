@@ -1,8 +1,8 @@
 
 "use strict";
 
-var drupal = require('./drupal');
-
+//var drupal = require('./drupal');
+import { drupal } from './drupal';
 
 // fetch() polyfill used by Babel.
 require('whatwg-fetch');
@@ -91,7 +91,7 @@ class Router {
 
 	navigate(route) {
 		if (route.nid) {
-			drupal.drupal.getNid(route.nid);
+			drupal.getNid(route.nid);
 		} else {
 			console.log('I do not recognize this route');
 			// @TODO We only support nids for now.
