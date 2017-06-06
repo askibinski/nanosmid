@@ -43,9 +43,13 @@ class Router {
 	}
 
 	loadCurrent() {
+		console.log(location.pathname);
 		let route = this.check(location.pathname);
 		if (route !== false) {
 			this.navigate(route);
+		}
+		else {
+			console.log('route not recognized');
 		}
 	}
 

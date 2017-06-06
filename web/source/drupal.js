@@ -36,14 +36,10 @@ class Drupal {
 	}
 
 	showNid(data) {
-		//console.log('Connected to Drupal!');
-		var h1 = document.createElement("h1")
-		var title = document.createTextNode(data.attributes.title);
-		var body = document.createTextNode(data.attributes.body.value);
-		h1.appendChild(title);
+		document.getElementById('page_title').innerHTML = "";
+		document.getElementById('page_title').innerHTML = data.attributes.title;
 		document.getElementById('content').innerHTML = "";
-		document.getElementById('content').appendChild(h1);
-		document.getElementById('content').appendChild(body);
+		document.getElementById('content').innerHTML = data.attributes.body.value;
 	}
 
 }

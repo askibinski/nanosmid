@@ -16,3 +16,6 @@ https://scotch.io/tutorials/getting-started-with-browserify
 https://www.viget.com/articles/gulp-browserify-starter-faq
 verschillende plugins gulp:
 https://wehavefaces.net/gulp-browserify-the-gulp-y-way-bb359b3f9623
+
+gebruik van innerhtml nodig:
+http://krasimirtsonev.com/blog/article/Revealing-the-magic-how-to-properly-convert-HTML-string-to-a-DOM-element
