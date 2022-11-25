@@ -1,0 +1,28 @@
+{
+  "name": "nanosmid",
+  "version": "1.0.0",
+  "description": "Nanosmid",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack serve --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/askibinski/nanosmid.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/askibinski/nanosmid/issues"
+  },
+  "homepage": "https://github.com/askibinski/nanosmid#readme",
+  "devDependencies": {
+    "lit": "^2.4.1",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.9.3",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
