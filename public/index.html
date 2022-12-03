@@ -10,22 +10,42 @@
     />
     <script src="./dist/main.js" type="module"></script>
     <title>Nanosmid: art and coding</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      /* a media query for mobile */
+
+      .box {
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        width: 50%;
+      }
+      @media screen and (max-width: 600px) {
+        .box { width: 100% };
+      }
+    </style>
   </head>
 
   <body>
-    <h1>Art and code</h1>
-    <p>
-      I'm a developer and artist with a technical background in
-      design engineering. Currently, I'm exploring the possibilities of artificial
-      intelligence.
-    </p>
-    <p>
-      My development skills include: Drupal, PHP, JavaScript, TypeScript, React, Gatsby, Node.js and of course HTML/CSS.
-    </p>
-    <p>
-      As an artist, I'm interested in the intersection of art and technology. This includes generative art, machine learning, and artificial intelligence.
-    </p>
-    <p>See also <a href="https://albert.skibinski.nl">my personal blog</a> and <a href="https://twitter.com/askibinski">Twitter</a>.</p>
+    <div class="box">
+      <div>
+      <h1>Art and code</h1>
+      <p>
+        I'm a developer and creator with a technical background in
+        design engineering. Currently, I'm exploring the possibilities of artificial
+        intelligence.
+      </p>
+      <p>
+        My development skills include: Drupal, PHP, JavaScript, TypeScript, React, Gatsby, Node.js and of course HTML/CSS.
+      </p>
+      <p>
+        As a creator/artist, I'm interested in the intersection of art and technology. This includes generative art, machine learning, and artificial intelligence.
+      </p>
+      <p>See also <a href="https://albert.skibinski.nl">my personal blog</a> and <a href="https://twitter.com/askibinski">Twitter</a>.</p>
+      </div>
+    </div>
     <medium-portfolio username="askibinski"></medium-portfolio>
   </body>
 
