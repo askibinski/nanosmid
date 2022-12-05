@@ -1,10 +1,10 @@
 // @ts-check
-import { encodeObject, decodeObject } from "../services/helper";
-import { Article } from "../services/medium-feed";
+import { encodeObject, decodeObject } from "../../services/helper";
+import { Article } from "../../services/medium-feed";
 import "./medium-category-chips";
 import { customElement, property } from "lit/decorators.js";
 import { html, css, LitElement } from "lit";
-import { sharedStyles } from "../shared/style";
+import { sharedStyles } from "../../shared/style";
 import { styleMap } from "lit-html/directives/style-map.js";
 
 const componentStyle = css`

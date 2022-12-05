@@ -1,6 +1,6 @@
-import { getRssFeed, RssFeed } from "../services/medium-feed";
-import "../components/medium-articles";
-import "../components/medium-header";
+import { getRssFeed, RssFeed } from "../../services/medium-feed";
+import "./medium-articles";
+import "./medium-header";
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 

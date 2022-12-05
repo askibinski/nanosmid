@@ -1,5 +1,5 @@
 import { html, css, LitElement } from "lit";
-import { sharedStyles } from "../shared/style";
+import { sharedStyles } from "../../shared/style";
 import { customElement, property } from "lit/decorators.js";
 
 const componentStyle = css`

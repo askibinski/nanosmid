@@ -1,5 +1,5 @@
 import "./medium-article-card";
-import { Article } from "../services/medium-feed";
+import { Article } from "../../services/medium-feed";
 import { customElement, property } from "lit/decorators.js";
 import { html, css, LitElement } from "lit";
 

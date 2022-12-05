@@ -1,19 +1,10 @@
-module.exports = {
-  entry: "./src/main.js"
-};
-
-const path = require("path");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+  mode: "development",
   entry: "./src/main.ts",
-  mode: "production",
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'public'),
-    },
-    watchFiles: ['*.html'],
-    hot: false,
-    compress: true,
     port: 8080,
   },
   module: {
@@ -32,4 +23,10 @@ module.exports = {
     path: path.resolve(__dirname, "public/dist"),
     filename: "main.js",
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+    title: 'Custom template',
+    template: './src/index.html'
+  })
+  ]
 };
