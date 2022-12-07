@@ -45,6 +45,7 @@ class NanosmidBox extends LitElement {
 
   async loadData() {
     this.drupalData = await getDrupalData(this.getArticleType);
+    console.log(this.drupalData)
   }
 
   createRenderRoot() {
@@ -58,9 +59,7 @@ class NanosmidBox extends LitElement {
   render() {
     return this.drupalData
       ? html`
-          <div id="box">
-              TESTING
-          </div>
+          <div id="box"></div>
         `
       : html``;
   }

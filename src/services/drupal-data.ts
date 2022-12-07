@@ -77,27 +77,16 @@ export async function getDrupalData(article_type = "art"): Promise<DrupalData> {
 
   console.log(data);
   // Verify that the data is valid json data from Drupal.
-  if (!data.jsonapi) {
+  if (!data.jsonapi || !data.data) {
     throw new Error("No data.");
-
   }
-  // console.log(items);
-  // console.log(status);
 
-  // const articles = items
-  //   .filter((item) => item.thumbnail)
-  //   .map((item) => {
-  //     return {
-  //       ...item,
-  //       userLink: feed.link,
-  //     };
-  //   });
-  //
-  // if (!feed || status !== "ok") {
-  //   throw new Error("An error occured.");
-  // }
+  const articles = data.data
+    .map((item) => {
+      return {
+        ...item.attributes,
+      };
+    });
 
-  const articles: never[] = [];
-
-  return { articles };
+  return { articles: articles };
 }
