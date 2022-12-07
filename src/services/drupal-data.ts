@@ -75,7 +75,10 @@ async function fetchDrupalData(article_type: string): Promise<JsonApiResponse> {
 export async function getDrupalData(article_type = "art"): Promise<DrupalData> {
   const data = await fetchDrupalData(article_type);
 
-  console.log(data);
+  // @todo for now, we are not using any authentication in Drupal so we changed the permission that content can be
+  // viewed by anonymous. Which is no security issue since it is public content anyway, but in order to prevent
+  // future mistakes, authentication would be preferable (oAuth2).
+
   // Verify that the data is valid json data from Drupal.
   if (!data.jsonapi || !data.data) {
     throw new Error("No data.");
